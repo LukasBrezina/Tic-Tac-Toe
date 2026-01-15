@@ -7,31 +7,36 @@ defmodule TicTacToeWeb.GameController do
     json(conn, %{board: Board.to_map(board)})
   end
 
-  def move(conn, %{"position" => pos}) do
-    board = conn.body_params["board"] || Board.new()
+  def move(conn, %{"position" => pos, "board" => board_map}) do
+    board = map_to_list(board_map)
     position = String.to_integer(pos)
 
     case Game.make_move(board, position, :x) do
-      {:ok, new_board} ->
-        json(conn, %{status: "ok", board: Board.to_map(new_board)})
+      {:ok, board_after_x} ->
+        case Game.make_move(board_after_x, :o) do
+          {:ok, board_after_o} ->
+            json(conn, %{status: "ok", board: Board.to_map(board_after_o)})
+
+          {:finished, winner, board_after_o} ->
+            json(conn, %{status: "finished", winner: winner, board: Board.to_map(board_after_o)})
+        end
 
       {:error, :occupied, board} ->
         json(conn, %{status: "error", reason: "occupied", board: Board.to_map(board)})
 
-      {:finished, winner, new_board} ->
-        json(conn, %{status: "finished", winner: winner, board: Board.to_map(new_board)})
+      {:finished, winner, board_after_x} ->
+        json(conn, %{status: "finished", winner: winner, board: Board.to_map(board_after_x)})
     end
   end
 
-  def computer_move(conn, _params) do
-    board = conn.body_params["board"] || Board.new()
-
-    case Game.make_move(board, :o) do
-      {:ok, new_board} ->
-        json(conn, %{status: "ok", board: Board.to_map(new_board)})
-
-      {:finished, winner, new_board} ->
-        json(conn, %{status: "finished", winner: winner, board: Board.to_map(new_board)})
-    end
+  defp map_to_list(board_map) do
+    0..8
+    |> Enum.map(fn i ->
+      case Map.get(board_map, Integer.to_string(i)) do
+        nil -> nil
+        value when is_atom(value) or is_binary(value) -> value
+        _ -> raise "Invalid value in board_map"
+      end
+    end)
   end
 end

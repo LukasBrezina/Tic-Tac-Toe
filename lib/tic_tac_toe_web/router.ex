@@ -10,6 +10,5 @@ defmodule TicTacToeWeb.Router do
 
     get "/new", GameController, :new
     post "/move", GameController, :move
-    post "/computer", GameController, :computer_move
   end
 end
