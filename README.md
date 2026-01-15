@@ -1,5 +1,13 @@
 # TicTacToe
 
-Start: "mix phx.server"
+## Get Dependencies
+mix deps.get
 
-Endpoints: "http://localhost:4000/api/...."
+## Start Application
+mix phx.server
+
+## Endpoints
+
+GET http://localhost:4000/api/new -> create new Game
+
+POST http://localhost:4000/api/move -> make move (body = "board" : {board from last response}, "position" : {where to move}
