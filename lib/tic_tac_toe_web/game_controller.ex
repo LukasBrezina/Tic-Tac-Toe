@@ -49,7 +49,7 @@ defmodule TicTacToeWeb.GameController do
     end)
   end
 
-  defp winner_message(:x), do: "X hat gewonnen"
-  defp winner_message(:o), do: "O hat gewonnen"
-  defp winner_message(:draw), do: "Unentschieden"
+  defp winner_message(:x), do: "X wins"
+  defp winner_message(:o), do: "O wins"
+  defp winner_message(:draw), do: "Draw"
 end
