@@ -1,4 +1,9 @@
 defmodule TicTacToe.GameFinished do
+  @moduledoc """
+  Module for checking if the Tic Tac Toe game has finished.
+  It provides functions to determine if there is a winner or if the game ended in a draw
+  """
+  # Win Conditions
   @wins [
     [0, 1, 2],
     [3, 4, 5],
