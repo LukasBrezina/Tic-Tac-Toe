@@ -1,4 +1,14 @@
 # TicTacToe
+----------------
+#### by Ahmad Hamza, Brezina Lukas, Pertl Moritz, Poglitsch Anna, Prekaj Lindrit
+----------------
+
+## Check Elixir
+elixir --version
+
+Follow https://elixir-lang.org/install.html if not installed yet
+
+----------------
 
 ## Get Dependencies
 mix deps.get
